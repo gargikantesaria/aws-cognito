@@ -4,21 +4,21 @@ import * as AWSCognito from "amazon-cognito-identity-js";
 @Injectable()
 export class CognitoServiceProvider {
 
-  _POOL_DATA = {
+  POOL_DATA = {
     UserPoolId: "YOUR_COGNITO_USER_POOL_ID",
     ClientId: "YOUR_COGNITO_CLIENT_ID"
   };
 
   signUp(userData) {
     return new Promise((resolved, reject) => {
-      const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+      const userPoolData = new AWSCognito.CognitoUserPool(this.POOL_DATA);
 
       let userAttribute = [];
       userAttribute.push(
         new AWSCognito.CognitoUserAttribute({ Name: "email", Value: userData.email })
       );
 
-      userPool.signUp(userData.email, userData.password, userAttribute, null, function (err, result) {
+      userPoolData.signUp(userData.email, userData.password, userAttribute, null, function (err, result) {
         if (err) {
           reject(err);
         } else {
@@ -30,11 +30,11 @@ export class CognitoServiceProvider {
 
   confirmUser(verificationCode, userName) {
     return new Promise((resolved, reject) => {
-      const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+      const userPoolData = new AWSCognito.CognitoUserPool(this.POOL_DATA);
 
       const cognitoUser = new AWSCognito.CognitoUser({
         Username: userName,
-        Pool: userPool
+        Pool: userPoolData
       });
 
       cognitoUser.confirmRegistration(verificationCode, true, function (err, result) {
@@ -49,7 +49,7 @@ export class CognitoServiceProvider {
 
   authenticate(userData) {
     return new Promise((resolved, reject) => {
-      const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+      const userPoolData = new AWSCognito.CognitoUserPool(this.POOL_DATA);
 
       const authDetails = new AWSCognito.AuthenticationDetails({
         Username: userData.email,
@@ -58,7 +58,7 @@ export class CognitoServiceProvider {
 
       const cognitoUser = new AWSCognito.CognitoUser({
         Username: userData.email,
-        Pool: userPool
+        Pool: userPoolData
       });
 
       cognitoUser.authenticateUser(authDetails, {
@@ -85,11 +85,11 @@ export class CognitoServiceProvider {
 
   forgotPassword(userData) {
     return new Promise((resolve, reject) => {
-      const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+      const userPoolData = new AWSCognito.CognitoUserPool(this.POOL_DATA);
 
       const cognitoUser = new AWSCognito.CognitoUser({
         Username: userData.email,
-        Pool: userPool
+        Pool: userPoolData
       });
 
       cognitoUser.forgotPassword({
@@ -105,11 +105,11 @@ export class CognitoServiceProvider {
 
   confirmPassword(verificationCode, password, email) {
     return new Promise((resolve, reject) => {
-      const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+      const userPoolData = new AWSCognito.CognitoUserPool(this.POOL_DATA);
 
       const cognitoUser = new AWSCognito.CognitoUser({
         Username: email,
-        Pool: userPool
+        Pool: userPoolData
       });
 
       cognitoUser.confirmPassword(verificationCode, password, {
