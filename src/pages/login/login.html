@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="login()" [formGroup]="loginForm">
+    <ion-row>
+      <ion-col>
+        <ion-list inset>
+          <ion-item>
+            <ion-input type="text" placeholder="Email" formControlName="email" required></ion-input>
+          </ion-item>
+          <p *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].invalid" class="showError">Please
+            enter valid email.</p>
+
+          <ion-item>
+            <ion-input type="password" placeholder="Password" formControlName="password" required></ion-input>
+          </ion-item>
+          <p *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].invalid" class="showError">
+            Please enter valid password.</p>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="signup-col">
+        <button ion-button class="submit-btn" full type="submit" [disabled]="!loginForm.valid">Login</button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row>
+    <ion-col class="signup-col">
+      <button ion-button class="submit-btn" full type="submit" (click)="openPage()">Sign Up</button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="signup-col">
+      <button ion-button class="submit-btn" full type="submit" (click)="forgotPassword()">Forgot Passowrd</button>
+    </ion-col>
+  </ion-row>
+</ion-content>
